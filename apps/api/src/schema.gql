@@ -1,0 +1,62 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input CreateOrderDto {
+  items: [OrderItemDto!]!
+}
+
+input CreateProductDto {
+  inStock: Boolean! = true
+  name: String!
+  price: Float!
+}
+
+type Mutation {
+  createOrder(input: CreateOrderDto!): Order!
+  createProduct(input: CreateProductDto!): Product!
+  updateOrderStatus(id: String!, status: String!): Order!
+}
+
+type Order {
+  id: ID!
+  items: [OrderItem!]!
+  status: OrderStatus!
+  total: Float!
+}
+
+type OrderItem {
+  id: ID!
+  product: Product!
+  quantity: Float!
+  subtotal: Float!
+}
+
+input OrderItemDto {
+  productId: String!
+  quantity: Float!
+}
+
+enum OrderStatus {
+  PAID
+  PENDING
+  SHIPPED
+}
+
+type Product {
+  id: ID!
+  inStock: Boolean!
+  name: String!
+  price: Float!
+}
+
+type Query {
+  orders(status: String): [Order!]!
+  product(id: String!): Product!
+  products(search: String): [Product!]!
+}
+
+type Subscription {
+  orderCreated: Order!
+  orderStatusChanged(orderId: String!): Order!
+}

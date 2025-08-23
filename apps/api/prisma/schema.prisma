@@ -1,0 +1,51 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  SHIPPED
+}
+
+model Product {
+  id      String  @id @default(cuid())
+  name    String
+  price   Float
+  inStock Boolean @default(true)
+  orders  OrderItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Order {
+  id     String     @id @default(cuid())
+  items  OrderItem[]
+  status OrderStatus @default(PENDING)
+  total  Float
+
+  @@map("orders")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model OrderItem {
+  id        String  @id @default(cuid())
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId   String
+  quantity  Int
+
+  @@map("order_items")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
