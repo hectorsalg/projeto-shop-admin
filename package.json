@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "build": "yarn install:all && yarn generate:prisma",
+    "start:all": "concurrently \"yarn --cwd backend start\" \"yarn --cwd frontend dev\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.0"
+  }
+}
