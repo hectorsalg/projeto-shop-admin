@@ -68,7 +68,8 @@ yarn start:all
 ```bash
 cd backend
 yarn install
-npx migrate generate
+npx prisma generate
+npx prisma migrate dev
 yarn start
 ```
 
