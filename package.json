@@ -2,7 +2,8 @@
   "scripts": {
     "install:all": "yarn --cwd backend install && yarn --cwd frontend install",
     "generate:prisma": "yarn --cwd backend prisma generate",
-    "build": "yarn install:all && yarn generate:prisma",
+    "migrate:prisma": "yarn --cwd backend prisma migrate dev",
+    "build": "yarn install:all && yarn generate:prisma && yarn migrate:prisma",
     "start:all": "concurrently \"yarn --cwd backend start\" \"yarn --cwd frontend dev\""
   },
   "devDependencies": {
